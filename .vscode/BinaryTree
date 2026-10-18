@@ -1,0 +1,317 @@
+/*****************Binary Tree*****************/
+import java.util.Scanner;
+import java.util.Stack;
+
+// Node class
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+// Binary Tree class
+public class BinaryTree {
+    Node root;
+    Scanner sc = new Scanner(System.in);
+    // Insert node as per user's choice
+    public void insert() {
+        System.out.print("Enter root node value: ");
+        int val = sc.nextInt();
+        if(root==null)
+        {
+        root = new Node(val);
+        }
+        else
+        insertNode(root);
+    }
+
+    private void insertNode(Node current) {
+        System.out.print("Do you want to insert more nodes? (yes/no): ");
+        String choice = sc.next();
+        if (!choice.equalsIgnoreCase("yes"))
+            return;
+
+        System.out.print("Enter value to insert: ");
+        int val = sc.nextInt();
+        Node newNode = new Node(val);
+
+        while (true) {
+            System.out.print("Current Node: " + current.data + ". Insert left or right? ");
+            String dir = sc.next();
+
+            if (dir.equalsIgnoreCase("left")) {
+                if (current.left == null) {
+                    current.left = newNode;
+                    break;
+                } else {
+                    current = current.left;
+                }
+            } else if (dir.equalsIgnoreCase("right")) {
+                if (current.right == null) {
+                    current.right = newNode;
+                    break;
+                } else {
+                    current = current.right;
+                
+            } else {
+                System.out.println("Invalid direction! Enter 'left' or 'right'.");
+            }
+        }
+
+        insertNode(root); // continue inserting
+    }
+
+    // Recursive Traversals
+    void inorderRec(Node node) {
+        if (node != null) {
+            inorderRec(node.left);
+            System.out.print(node.data + " ");
+            inorderRec(node.right);
+        }
+    }
+
+    void preorderRec(Node node) {
+        if (node != null) {
+            System.out.print(node.data + " ");
+            preorderRec(node.left);
+            preorderRec(node.right);
+        }
+    }
+
+    void postorderRec(Node node) {
+        if (node != null) {
+            postorderRec(node.left);
+            postorderRec(node.right);
+            System.out.print(node.data + " ");
+        }
+    }
+
+    // Non-recursive traversals
+    void inorderIter(Node node) {
+        Stack<Node> stack = new Stack<>();
+        Node current = node;
+        while (current != null || !stack.isEmpty()) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack.pop();
+            System.out.print(current.data + " ");
+            current = current.right;
+        }
+    }
+
+    void preorderIter(Node node) {
+        if (node == null)
+            return;
+        Stack<Node> stack = new Stack<>();
+        stack.push(node);
+
+        while (!stack.isEmpty()) {
+            Node temp = stack.pop();
+            System.out.print(temp.data + " ");
+
+            if (temp.right != null)
+                stack.push(temp.right);
+            if (temp.left != null)
+                stack.push(temp.left);
+        }
+    }
+
+    void postorderIter(Node node) {
+        if (node == null)
+            return;
+        Stack<Node> stack1 = new Stack<>();
+        Stack<Node> stack2 = new Stack<>();
+
+        stack1.push(node);
+        while (!stack1.isEmpty()) {
+            Node temp = stack1.pop();
+            stack2.push(temp);
+
+            if (temp.left != null)
+                stack1.push(temp.left);
+            if (temp.right != null)
+                stack1.push(temp.right);
+        }
+
+        while (!stack2.isEmpty()) {
+            System.out.print(stack2.pop().data + " ");
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        BinaryTree tree = new BinaryTree();
+        tree.insert();
+
+        System.out.println("\n--- Recursive Traversals ---");
+        System.out.print("Inorder: ");
+        tree.inorderRec(tree.root);
+        System.out.print("\nPreorder: ");
+        tree.preorderRec(tree.root);
+        System.out.print("\nPostorder: ");
+        tree.postorderRec(tree.root);
+
+        System.out.println("\n\n--- Non-Recursive Traversals ---");
+        System.out.print("Inorder: ");
+        tree.inorderIter(tree.root);
+        System.out.print("\nPreorder: ");
+        tree.preorderIter(tree.root);
+        System.out.print("\nPostorder: ");
+        tree.postorderIter(tree.root);
+    }
+}
+/*************************** */
+class Node{
+    int data;
+    Node left;
+    Node right;
+    Node(int d){
+        data=d;
+        left=right=null;
+    }
+}
+class BinaryTree{
+
+    Node root;
+    int data;
+    Scanner sc=new Scanner(System.in);
+    void insert()
+    {
+         System.out.println("Enter data for root");
+         data=sc.nextInt();
+         root= new Node(data);
+         Insert_left_right(root);
+    }
+    Node Insert_left_right(Node temp)
+    {
+        System.out.println("Do you wanna Insert more Node? IF yes Enter value to insert");
+        int value=sc.nextInt();
+        Node n1=new Node(value);
+        System.out.println("left=any non zero value or Right=0 give choice");
+        int choice=sc.nextInt();
+
+        while(true)
+        {
+        if(choice!=0)
+        {
+            if(temp.left==null)
+            {
+                temp.left=n1;
+                break;
+            }
+            else
+            {
+                temp=temp.left;
+            }
+
+        }
+        else if(choice==0)
+        {
+            if(temp.right==null)
+            {
+                temp.right=n1;
+                break;
+            }
+            else
+            {
+                temp=temp.right;
+            }
+
+        }
+        else
+        {
+             System.out.println("Invalid Choice:");
+        }
+
+             return temp;
+    }
+    }
+
+}
+public class Main{
+    public static void main(String[] args)
+    {
+        BinaryTree b1=new BinaryTree();
+        b1.insert();
+
+    }
+}
+
+/**************************** */
+import java.util.*;
+class Node{
+    String name;
+    Node Left_Child;
+    Node Right_Child;
+    Node(String name)
+    {
+        /*Copy String in java */
+        this.name=name;
+        this.Left_Child=null;
+        this.Right_Child=null;
+
+    }
+}
+class Bt{
+    Node root;
+    Scanner sc=new Scanner(System.in);
+    void insertroot()
+    {
+           if(root==null)
+           {
+            System.out.println("Root Value?");
+            String val=sc.next();
+            root=new Node(val);
+            
+           }
+           else
+           Insertpos(root);
+    }
+    void Insertpos(Node temp)
+    {
+        System.out.println("Continue Insertion?");
+        String val=sc.next();
+        if(codintion_if no continue...)
+        {
+            retrun;
+        }
+        else
+        {
+            System.out.println("Left or Right?");
+            String val=sc.next();
+            Node n1=new Node(val);
+            if(condition_left)
+            {
+                if(temp.Left_Child==null)
+                {
+                      temp.Left_Child=n1;
+                }
+                temp=temp.Left_Child;
+            }
+              if(condition_right)
+            {
+                if(temp.Left_Child==null)
+                {
+                      temp.Left_Child=n1;
+                }
+                temp=temp.Left_Child;
+            }
+        }
+        return(temp);
+    }
+
+}
+public class Main
+{
+    public static void main(String args[])
+    {
+        Bt bt1=new Bt();
+        bt1.insertroot();
+    }
+}
