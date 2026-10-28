@@ -4,98 +4,95 @@ class node{
     node left;
     node right;
     node(int data){
-        this.data= data;
-        left=right=null;
+        this.data=data;
+        left = right = null;
         
     }
 }
 public class binarytree{
     node root;
     node current;
+    
     Scanner sc = new Scanner(System.in);
     binarytree(){
-         System.out.println("Enter the value of the root:");
-         int val = sc.nextInt();
-         root = new node(val); 
-         
-         current = root;
-    }
-    
+            System.out.println("Enter the root node");
+            int val = sc.nextInt();
+            node newnode = new node(val);
+            root = newnode;
+            current = root;
+            }
     void insert(){
         while(true){
-            System.out.println("Do you want to continue: 1.Y 2.N");
-            int ch = sc.nextInt();
-            if(ch ==1 ){
-                System.out.println("Enter the value :");
-                int val = sc.nextInt(); 
-                node newnode = new  node(val);
-                System.out.println("Enter the direction of the insertion : 1.right 2.left");
-                int dir = sc.nextInt();
-                if(dir== 1 && current.right==null){
-                    current.right =newnode;
-                  current = newnode;
-                    
-                    
-                
-                }
-             else if   (dir== 2 && current.left== null){
+            System.out.println("Do you want to continue?: 1.yes 2.no");
+            int choice=sc.nextInt();
+            if(choice==1){
+            System.out.println("Enter the  node :");
+            int val = sc.nextInt();
+            node newnode = new node(val);
+            System.out.println("Enter the direction of insertion: 1.Left 2.Right");
+            int dir=sc.nextInt();
+            if(dir == 1){
+                if(current.left == null){
                     current.left=newnode;
-                   
-                     current = newnode;
-                
+                    
+                    
+                }
+                    else{
+                        current=current.left;
+                    }
+                }
             
+            else if(dir == 2){
+                if(current.right==null){
+                    current.right = newnode;
+                    
+                    
+                }
+                    else{
+                        current=current.right;
+                    }
+                }
             }
-            }
-           else   if(ch == 2){
+         
+            if(choice == 2){
                 break;
             }
             
-            
         }
-    }
-    
-        
+    } 
         void preorder(node current){
             if(current==null){
                 return;
-            }   
-                System.out.println(" "+current.data);
-                preorder(current.left);
-                preorder(current.right);
-                
-            }               
-        void inorder(node current){
-        if(current==null){
-                return;
-            }   
-                inorder(current.left);
-                System.out.println(" "+current.data);
-                inorder(current.right);
-                
             }
-            
+            System.out.println(" "+current.data);
+            preorder(current.left);
+            preorder(current.right);
+        }
+        
+        void inorder(node current){
+            if(current==null){
+                return;
+            }
+            inorder(current.left);
+            System.out.println(" "+current.data);
+            inorder(current.right);
+        }
         void postorder(node current){
             if(current==null){
                 return;
-                 }
-                postorder(current.left);
-                postorder(current.right);
-                System.out.println(" "+current.data);
-                
-            } 
-            
-    public static void  main (String[] args) {
-               binarytree tree = new binarytree();
-               tree.insert();
-               System.out.println("Preorder Traversal :");
-               tree.preorder(tree.root);
-               System.out.println("Inorder Traversal :");
-               tree.inorder(tree.root);
-               System.out.println("Postorder Traversal :");
-               tree.postorder(tree.root);
             }
-            }
-        
-            
-        
-    
+            postorder(current.left);
+            postorder(current.right);
+            System.out.println(" "+current.data);
+        }
+        public static void main(String[] args){
+            binarytree tree = new binarytree();
+            tree.insert();
+            System.out.println("preorder");
+            tree.preorder(tree.root);
+            System.out.println("inorder");
+            tree.inorder(tree.root);
+            System.out.println("postorder");
+            tree.postorder(tree.root);
+        }
+    }
