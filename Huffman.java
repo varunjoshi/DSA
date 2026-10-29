@@ -1,4 +1,3 @@
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 class HuffmanNode {
@@ -8,28 +7,38 @@ class HuffmanNode {
     HuffmanNode right;
 }
 
-class ImplementComparator implements Comparator<HuffmanNode> {
-    public int compare(HuffmanNode x, HuffmanNode y) {
-        return x.item - y.item;
-    }
-}
-
 public class Huffman {
+
     public static void printCode(HuffmanNode root, String s) {
+        if (root == null) {
+            return;
+        }
+
         if (root.left == null && root.right == null && Character.isLetter(root.c)) {
             System.out.println(root.c + "   |  " + s);
             return;
         }
-        printCode(root.left, s + "0");
-        printCode(root.right, s + "1");
+
+        if (root.left != null) {
+            printCode(root.left, s + "0");
+        }
+
+        if (root.right != null) {
+            printCode(root.right, s + "1");
+        }
     }
 
     public static void main(String[] args) {
-        int n = 4;
         char[] charArray = { 'A', 'B', 'C', 'D' };
         int[] charfreq = { 5, 1, 6, 3 };
+        int n = charArray.length;
 
-        PriorityQueue<HuffmanNode> q = new PriorityQueue<HuffmanNode>(n, new ImplementComparator());
+        if (n == 0) {
+            System.out.println("No characters to compress.");
+            return;
+        }
+
+        PriorityQueue<HuffmanNode> q = new PriorityQueue<>((a, b) -> a.item - b.item);
 
         for (int i = 0; i < n; i++) {
             HuffmanNode hn = new HuffmanNode();
@@ -55,11 +64,14 @@ public class Huffman {
             f.left = x;
             f.right = y;
             root = f;
+
             q.add(f);
         }
 
-        System.out.println(" Char | Huffman code ");
-        System.out.println("--------------------");
+        if (q.size() == 1) {
+            root = q.peek();
+        }
+
         printCode(root, "");
     }
 }
